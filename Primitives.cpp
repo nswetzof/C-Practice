@@ -10,8 +10,8 @@ std::ostream& operator<<(std::ostream& output, const T& obj) {
 } // end function operator<<
 
 #elif !TEMPLATE
-std::ostream& operator<<(std::ostream& output, const IntObject& i_obj) {
-	output << i_obj.getVal();
+std::ostream& operator<<(std::ostream& output, Object* i_obj) {
+	i_obj->getOutput(output);
 	return output;
 } // end function operator<<
 #endif
