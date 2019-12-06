@@ -4,7 +4,7 @@
 using namespace std;
 
 class Object {
-	//virtual friend ostream& operator<<(ostream&, const Object&);
+	friend ostream& operator<<(ostream&, Object*);
 public:
 	Object() {}
 	virtual ostream& getOutput(ostream&) = 0;
@@ -14,7 +14,6 @@ public:
 }; // end class Object
 
 class IntObject : public Object {
-	friend ostream& operator<<(ostream& output, const IntObject* i_obj);
 public:
 	IntObject() : value(0) {} // end IntObject default constructor
 	IntObject(int val) :
@@ -30,10 +29,20 @@ public:
 		return *this;
 	}
 
-	virtual int getVal() const {
+	int getVal() const {
 		return value;
 	} // end function getVal
 	
 private:
 	int value;
 }; // end class IntegerObject
+
+class CharObject : public Object {
+public:
+	CharObject() : value('0') {} // default constructor
+	CharObject(char val) : value(val) {} // single argument constructor
+	virtual ostream& getOutput(ostream&);
+	char getVal() const;
+private:
+	char value;
+}; // end class CharObject
