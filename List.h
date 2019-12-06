@@ -8,7 +8,7 @@ public:
 	List(); // default constructor
 	List(const int);
 	const Object* operator[](const int&);
-	Object* elems;
+	Object* elems; // TODO: Make private after debugging
 private:
 	int SIZE;
 }; // end class List

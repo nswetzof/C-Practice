@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "Primitives.h"
+#include "List.h"
 
 using namespace std;
 

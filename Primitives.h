@@ -7,10 +7,10 @@ class Object {
 	friend ostream& operator<<(ostream&, Object*);
 public:
 	Object() {}
-	virtual ostream& getOutput(ostream&) = 0;
-	//virtual int getVal() const = 0;
-	//virtual double getVal() const = 0;
-	//virtual Object operator=(Object&) = 0;
+	virtual ostream& getOutput(ostream& output) {
+		throw runtime_error("Shouldn't appear here");
+		return output;
+	}
 }; // end class Object
 
 class IntObject : public Object {
