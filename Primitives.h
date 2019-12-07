@@ -6,11 +6,7 @@ using namespace std;
 class Object {
 	friend ostream& operator<<(ostream&, Object*);
 public:
-	Object() {}
-	virtual ostream& getOutput(ostream& output) {
-		throw runtime_error("Shouldn't appear here");
-		return output;
-	}
+	virtual ostream& getOutput(ostream& output) = 0;
 }; // end class Object
 
 class IntObject : public Object {

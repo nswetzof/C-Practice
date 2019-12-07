@@ -10,14 +10,13 @@ using namespace std;
 int main() {
 	IntObject t0(2);
 	CharObject t1('a');
+	IntObject t2 = t0;
 	IntObject* ptr = &t0;
 
-	vector<Object*> t(2);
-	t[0] = &t0;
-	t[1] = &t1;
-
-	for (int i = 0; i < t.size(); i++) {
-		cout.width(10);
-		cout << t[i];
-	}
+	//vector<Object*> t(2);
+	List list;
+	list.append(&t0);
+	list.append(&t1);
+	list.append(&t2);
+	list.print();
 } // end main
