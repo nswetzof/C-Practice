@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+#include <fstream>
 #include "Primitives.h"
 #include "List.h"
 
@@ -13,10 +13,14 @@ int main() {
 	IntObject t2 = t0;
 	IntObject* ptr = &t0;
 
-	//vector<Object*> t(2);
 	List list;
 	list.append(&t0);
 	list.append(&t1);
-	list.append(&t2);
-	list.print();
+	list.append(new IntObject(522));
+	list.append(new CharObject('c'));
+	for (int i = 0; i < 100; i++)
+		list.append(new IntObject(i));
+	fstream os;
+	os.open("test.dat", ios::out);
+	os << list << endl;
 } // end main

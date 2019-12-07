@@ -19,8 +19,14 @@ List::List(const List& list) {
 		elems[i] = list.elems[i];
 } // end List copy constructor
 
-const Object* List::operator[](const int& index) {
-	if (index >= capacity)
+Object* List::operator[](const int& index) const {
+	if (index >= size)
+		throw out_of_range("Index out of range.");
+	return elems[index];
+} // end const function operator[]
+
+Object*& List::operator[](const int& index) {
+	if (index >= size)
 		throw out_of_range("Index out of range.");
 	return elems[index];
 } // end function operator[]
@@ -43,13 +49,24 @@ void List::append(Object* obj_ptr) {
 	elems[size++] = obj_ptr;
 } // end function append
 
-void List::print() const {
-	// print every element of the array
-	ostream_iterator<Object*> output(cout, " ");
-	cout << "[ ";
-	copy(elems, elems + size, output);
-	cout << "]";
-} // end function print
+ostream& operator<<(ostream& output, const List& l) {
+	output << "[ ";
+	for (int i = 0; i < l.size; i++) {
+		//if (i % 12 == 0 && i > 0)
+		//	output << '\n';
+		output << l[i] << ' ';
+	} // end for
+	output << "]";
+
+	return output;
+} // end function operator<<
+
 #define NEXT_STAGE 0
-#if NEXT_STAGE == 1
+#if NEXT_STAGE
+istream& operator>>(istream& input, List& l) {
+	cout << "Enter list items" << endl;
+	for (int i = 0; i < l.size; i++) {
+		input >> dynamic_cast<IntObject*>(l[i]); // won't work; don't know why dynamic_cast doesn't bandaide the problem
+	}
+} // end function operator>>
 #endif
