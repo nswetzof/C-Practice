@@ -19,6 +19,13 @@ List::List(const List& list) {
 		elems[i] = list.elems[i];
 } // end List copy constructor
 
+
+List::~List() {
+#if 1
+	delete[] elems;
+#endif
+} // end List destructor
+
 Object* List::operator[](const int& index) const {
 	if (index >= size)
 		throw out_of_range("Index out of range.");
@@ -43,11 +50,30 @@ void List::append(Object* obj_ptr) {
 		capacity = capacity > 0 ? capacity * 2 : capacity + 1;
 		elems = new Object*[capacity]; // resize the list
 		copy(list.elems, list.elems + size, elems);
-		delete[] list.elems;
 	} // end if
 
 	elems[size++] = obj_ptr;
 } // end function append
+
+Object* List::pop() {
+	// check if list is empty
+	if (size == 0) {
+		throw out_of_range("List is empty.");
+	}
+
+	Object* last_elem = elems[--size]; // return value
+	// if List is less than 1/4 full, halve the List's size
+	if (size <= capacity / 4) {
+		List list(*this);
+		capacity > 1 ? capacity / 2 : 1;
+		elems = new Object * [capacity]; // resize the list
+		copy(list.elems, list.elems + size - 1, elems);
+		//delete[] list.elems;
+	}
+	//size--;
+
+	return last_elem;
+} // end function pop
 
 ostream& operator<<(ostream& output, const List& l) {
 	output << "[ ";
@@ -61,12 +87,34 @@ ostream& operator<<(ostream& output, const List& l) {
 	return output;
 } // end function operator<<
 
-#define NEXT_STAGE 0
 #if NEXT_STAGE
-istream& operator>>(istream& input, List& l) {
-	cout << "Enter list items" << endl;
-	for (int i = 0; i < l.size; i++) {
-		input >> dynamic_cast<IntObject*>(l[i]); // won't work; don't know why dynamic_cast doesn't bandaide the problem
-	}
-} // end function operator>>
+void List::remove(Object* obj) {
+#if DEBUG
+	cout << "Removing " << obj << " from " << *this << endl;
+#endif
+	int index = -1;
+	for (int i = 0; i < size; i++) {
+#if DEBUG
+		cout << "elems[i]: " << elems[i]->type() << ",\tobj: " << obj->type() << endl;
+		cout << "\t\t" << elems[i] << " == " << obj << ": " << (obj->equals(elems[i])) << endl;
+#else
+		if (elems[i]->equals(obj)) {
+			index = i;
+			break;
+		}
+#endif
+	} // end for
+	if (index != -1) {
+		if (size < capacity / 4) {
+			capacity /= 2;
+		} // end inner if
+		Object** new_list = new Object * [capacity]; // new_list will hold value of elems with element removed
+		copy(elems, elems + index, new_list);
+		copy(elems + index + 1, elems + size, elems + index + 1);
+		size--;
+
+		elems = new Object * [capacity];
+		copy(new_list, new_list + size, elems);
+	} // end outer if
+} // end function remove
 #endif
