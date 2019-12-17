@@ -17,7 +17,7 @@ public:
 	virtual ostream& getOutput(ostream& output) { output << "Object at " << this; return output; }
 	virtual istream& getInput(istream&) { throw exception("Not implemented."); }
 	
-	virtual bool operator==(Object&);
+	//virtual bool operator==(Object&);
 #if TEST
 	virtual bool equals(Object*);
 	virtual void* getValPtr() = 0;
@@ -37,8 +37,6 @@ public:
 		value_ptr = static_cast<int*>(&value);
 	} // end IntObject constructor with 1 parameter // end IntObject single-argument constructor
 
-
-
 	virtual ostream& getOutput(ostream& os) {
 		os << getVal();
 		return os;
@@ -53,7 +51,6 @@ public:
 	virtual void convert(void* val_ptr);
 
 #if TEST
-	virtual bool operator==(IntObject&) const;
 	virtual bool equals(Object*);
 	virtual string type() { return "Int"; }
 #endif
@@ -87,7 +84,6 @@ public:
 
 	virtual void convert(void* val_ptr);
 #if TEST
-	virtual bool operator==(CharObject&) const;
 	virtual bool equals(Object*);
 	virtual string type() { return "Char"; }
 #endif

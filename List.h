@@ -1,6 +1,6 @@
 #pragma once
 #include "Primitives.h"
-#define DEBUG 0
+#define DEBUG 1
 #define NEXT_STAGE 1
 
 using namespace std;

@@ -96,13 +96,13 @@ void List::remove(Object* obj) {
 	for (int i = 0; i < size; i++) {
 #if DEBUG
 		cout << "elems[i]: " << elems[i]->type() << ",\tobj: " << obj->type() << endl;
-		cout << "\t\t" << elems[i] << " == " << obj << ": " << (elems[i] == obj) << endl;
-#else
+		cout << "\t\t" << elems[i] << " == " << obj << ": " << (*elems[i] == *obj ? "true" : "false") << endl;
+
+#endif
 		if (*(elems[i]) == *obj) {
 			index = i;
 			break;
 		}
-#endif
 	} // end for
 	if (index != -1) {
 		if (size < capacity / 4) {
