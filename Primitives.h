@@ -20,21 +20,17 @@ public:
 	//virtual bool operator==(Object&);
 #if TEST
 	virtual bool equals(Object*);
-	virtual void* getValPtr() = 0;
-	virtual string type() { return "Object"; }
-	virtual void convert(void*) = 0;
+	virtual inline int type() { return object; }
 #endif
 protected:
-	void* value_ptr = NULL;
-private:
+	enum types {object, int_object, char_object };
 }; // end class Object
 
 class IntObject : public Object {
 public:
-	IntObject() : value(0) { value_ptr = static_cast<int*>(&value); } // end IntObject default constructor
+	IntObject() : value(0) {} // end IntObject default constructor
 	IntObject(int val) :
 		value(val) {
-		value_ptr = static_cast<int*>(&value);
 	} // end IntObject constructor with 1 parameter // end IntObject single-argument constructor
 
 	virtual ostream& getOutput(ostream& os) {
@@ -48,11 +44,9 @@ public:
 		return *this;
 	}
 	
-	virtual void convert(void* val_ptr);
-
 #if TEST
 	virtual bool equals(Object*);
-	virtual string type() { return "Int"; }
+	virtual inline int type() { return int_object; }
 #endif
 
 #if !PTR // not using pointer implementation
@@ -64,31 +58,23 @@ public:
 		return value;
 	} // end function getVal
 
-	virtual void* getValPtr() {
-		return &value;
-	} // end function getVal
-
-	
 private:
 	int value;
 }; // end class IntegerObject
 
 class CharObject : public Object {
 public:
-	CharObject() : value('0') { value_ptr = static_cast<char*>(&value); } // default constructor
-	CharObject(char val) : value(val) {
-		value_ptr = static_cast<char*>(&value);
-	} // single argument constructor
+	CharObject() : value('0') {} // default constructor
+	CharObject(char val) : value(val) {} // single argument constructor
 	virtual ostream& getOutput(ostream&);
 	virtual istream& getInput(istream&);
 
 	virtual void convert(void* val_ptr);
 #if TEST
 	virtual bool equals(Object*);
-	virtual string type() { return "Char"; }
+	virtual inline int type() { return char_object; }
 #endif
 	char getVal() const;
-	virtual void* getValPtr();
 private:
 	char value;
 }; // end class CharObject

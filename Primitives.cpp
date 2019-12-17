@@ -26,18 +26,6 @@ bool operator==(Object& obj, Object& other) {
 	return (&obj)->equals(&other);
 } // end function operator==
 
-//bool Object::operator==(Object& obj) {
-//#define DEBUG 1
-//#if DEBUG == 1
-//	cout << "In object block\n";
-//#endif
-//	convert(value_ptr);
-//	Object* object = &obj;
-//	object->convert(obj.value_ptr);
-//	return true;
-//	//return ( *(value_ptr) == *(object->value_ptr) );
-//} // end function operator==
-
 bool Object::equals(Object* obj) {
 #if DEBUG == 1
 	cout << "\nIn object block\n";
@@ -58,12 +46,10 @@ IntObject& IntObject::operator=(int val) {
 } // end function operator=(int)
 
 bool IntObject::equals(Object* obj) {
-	return getVal() == dynamic_cast<IntObject*>(obj)->getVal();
+	if(type() == obj->type())
+		return getVal() == dynamic_cast<IntObject*>(obj)->getVal();
+	return false;
 } // end function equals
-
-void IntObject::convert(void* val_ptr) {
-	val_ptr = static_cast<int*> (val_ptr);
-} // end function convert
 
 ostream& CharObject::getOutput(ostream& output) {
 	output << getVal();
@@ -77,8 +63,9 @@ istream& CharObject::getInput(istream& input) {
 } // end function getInput
 
 bool CharObject::equals(Object* obj) {
-	cout << "getVal() = " << getVal() << ",\tobj.getVal() = " << dynamic_cast<CharObject*>(obj)->getVal() << endl;
-	return getVal() == dynamic_cast<CharObject*>(obj)->getVal();
+	if (type() == obj->type())
+		return getVal() == dynamic_cast<CharObject*>(obj)->getVal();
+	return false;
 } // end function equals
 
 void CharObject::convert(void* val_ptr) {
@@ -88,7 +75,3 @@ void CharObject::convert(void* val_ptr) {
 char CharObject::getVal() const {
 	return value;
 } // end CharObject function getVal
-
-void* CharObject::getValPtr() {
-	return &value;
-} // end function getValPtr

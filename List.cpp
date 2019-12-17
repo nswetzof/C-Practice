@@ -21,9 +21,7 @@ List::List(const List& list) {
 
 
 List::~List() {
-#if 1
 	delete[] elems;
-#endif
 } // end List destructor
 
 Object* List::operator[](const int& index) const {
@@ -110,11 +108,12 @@ void List::remove(Object* obj) {
 		} // end inner if
 		Object** new_list = new Object * [capacity]; // new_list will hold value of elems with element removed
 		copy(elems, elems + index, new_list);
-		copy(elems + index + 1, elems + size, elems + index + 1);
+		copy(elems + index + 1, elems + size, new_list + index);
 		size--;
 
-		elems = new Object * [capacity];
-		copy(new_list, new_list + size, elems);
+		//elems = new Object * [capacity];
+		elems = new_list;
+		//copy(new_list, new_list + size, elems);
 	} // end outer if
 } // end function remove
 #endif

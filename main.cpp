@@ -34,7 +34,7 @@ int main() {
 	PyObj t1_ptr = &t1;
 	PyObj t2_ptr = &t1a;
 
-	cout << "t1 == t1a: " << (*t1_ptr == *t2_ptr ? "true" : "false") << endl;
+	cout << "t1 == t1a: " << (*t1_ptr == t2 ? "true" : "false") << endl;
 	//exit(1);
 
 	List list;
