@@ -85,6 +85,10 @@ ostream& operator<<(ostream& output, const List& l) {
 	return output;
 } // end function operator<<
 
+const int len(const List& l) {
+	return l.size;
+} // end function len
+
 #if NEXT_STAGE
 void List::remove(Object* obj) {
 #if DEBUG

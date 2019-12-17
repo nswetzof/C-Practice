@@ -23,16 +23,16 @@ istream& operator>>(istream& input, Object* obj) {
 
 
 bool operator==(Object& obj, Object& other) {
-	return (&obj)->equals(&other);
+	return obj.equals(other);
 } // end function operator==
 
-bool Object::equals(Object* obj) {
+bool Object::equals(Object& obj) {
 #if DEBUG == 1
 	cout << "\nIn object block\n";
 	cout << "this: " << this->type() << endl;
 	cout << "obj: " << obj->type() << endl;
 #endif
-	return this == obj;
+	return this == &obj;
 } // end function equals
 
 std::istream& IntObject::getInput(istream& input) {
@@ -45,9 +45,9 @@ IntObject& IntObject::operator=(int val) {
 	return *this;
 } // end function operator=(int)
 
-bool IntObject::equals(Object* obj) {
-	if(type() == obj->type())
-		return getVal() == dynamic_cast<IntObject*>(obj)->getVal();
+bool IntObject::equals(Object& obj) {
+	if(type() == obj.type())
+		return getVal() == dynamic_cast<IntObject&>(obj).getVal();
 	return false;
 } // end function equals
 
@@ -62,9 +62,9 @@ istream& CharObject::getInput(istream& input) {
 	return input;
 } // end function getInput
 
-bool CharObject::equals(Object* obj) {
-	if (type() == obj->type())
-		return getVal() == dynamic_cast<CharObject*>(obj)->getVal();
+bool CharObject::equals(Object& obj) {
+	if (type() == obj.type())
+		return getVal() == dynamic_cast<CharObject&>(obj).getVal();
 	return false;
 } // end function equals
 

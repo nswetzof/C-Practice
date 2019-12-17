@@ -19,7 +19,7 @@ public:
 	
 	//virtual bool operator==(Object&);
 #if TEST
-	virtual bool equals(Object*);
+	virtual bool equals(Object&);
 	virtual inline int type() { return object; }
 #endif
 protected:
@@ -45,7 +45,7 @@ public:
 	}
 	
 #if TEST
-	virtual bool equals(Object*);
+	virtual bool equals(Object&);
 	virtual inline int type() { return int_object; }
 #endif
 
@@ -71,7 +71,7 @@ public:
 
 	virtual void convert(void* val_ptr);
 #if TEST
-	virtual bool equals(Object*);
+	virtual bool equals(Object&);
 	virtual inline int type() { return char_object; }
 #endif
 	char getVal() const;

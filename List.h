@@ -8,6 +8,7 @@ using namespace std;
 class List {
 	friend ostream& operator<<(ostream&, const List&);
 	friend istream& operator>>(istream&, List&);
+	friend const int len(const List&);
 public:
 	List(); // default constructor
 	List(const int);
