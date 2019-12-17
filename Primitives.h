@@ -12,25 +12,30 @@ using namespace std;
 class Object {
 	friend ostream& operator<<(ostream&, Object*);
 	friend istream& operator>>(istream&, Object*);
+	friend bool operator==(Object&, Object&);
 public:
 	virtual ostream& getOutput(ostream& output) { output << "Object at " << this; return output; }
 	virtual istream& getInput(istream&) { throw exception("Not implemented."); }
 	
-	virtual bool operator==(Object&) const;
+	virtual bool operator==(Object&);
 #if TEST
 	virtual bool equals(Object*);
 	virtual void* getValPtr() = 0;
 	virtual string type() { return "Object"; }
+	virtual void convert(void*) = 0;
 #endif
 protected:
 	void* value_ptr = NULL;
+private:
 }; // end class Object
 
 class IntObject : public Object {
 public:
-	IntObject() : value(0) { value_ptr = &value; } // end IntObject default constructor
+	IntObject() : value(0) { value_ptr = static_cast<int*>(&value); } // end IntObject default constructor
 	IntObject(int val) :
-		value(val) {} // end IntObject constructor with 1 parameter // end IntObject single-argument constructor
+		value(val) {
+		value_ptr = static_cast<int*>(&value);
+	} // end IntObject constructor with 1 parameter // end IntObject single-argument constructor
 
 
 
@@ -44,10 +49,12 @@ public:
 		value = i_obj.getVal();
 		return *this;
 	}
+	
+	virtual void convert(void* val_ptr);
 
 #if TEST
 	virtual bool operator==(IntObject&) const;
-	virtual bool equals(IntObject*);
+	virtual bool equals(Object*);
 	virtual string type() { return "Int"; }
 #endif
 
@@ -63,6 +70,7 @@ public:
 	virtual void* getValPtr() {
 		return &value;
 	} // end function getVal
+
 	
 private:
 	int value;
@@ -70,15 +78,17 @@ private:
 
 class CharObject : public Object {
 public:
-	CharObject() : value('0') { value_ptr = &value; } // default constructor
-	CharObject(char val) : value(val) {} // single argument constructor
+	CharObject() : value('0') { value_ptr = static_cast<char*>(&value); } // default constructor
+	CharObject(char val) : value(val) {
+		value_ptr = static_cast<char*>(&value);
+	} // single argument constructor
 	virtual ostream& getOutput(ostream&);
 	virtual istream& getInput(istream&);
 
-
+	virtual void convert(void* val_ptr);
 #if TEST
 	virtual bool operator==(CharObject&) const;
-	virtual bool equals(CharObject*);
+	virtual bool equals(Object*);
 	virtual string type() { return "Char"; }
 #endif
 	char getVal() const;

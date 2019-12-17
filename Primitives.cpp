@@ -20,12 +20,22 @@ istream& operator>>(istream& input, Object* obj) {
 //	return input;
 //} // end function operator>>
 
-bool Object::operator==(Object& obj) const {
+
+
+bool operator==(Object& obj, Object& other) {
+	return (&obj)->equals(&other);
+} // end function operator==
+
+bool Object::operator==(Object& obj) {
 #define DEBUG 1
 #if DEBUG == 1
 	cout << "In object block\n";
 #endif
-	return this == &obj;
+	convert(value_ptr);
+	Object* object = &obj;
+	object->convert(obj.value_ptr);
+	return true;
+	//return ( *(value_ptr) == *(object->value_ptr) );
 } // end function operator==
 
 bool Object::equals(Object* obj) {
@@ -42,26 +52,22 @@ std::istream& IntObject::getInput(istream& input) {
 	return input;
 } // end function getInput
 
-#if PTR
-IntObject* IntObject::operator=(int val) {
-	IntObject obj = IntObject(val);
-	*this = obj;
-	return this;
-} // end function operator=(int)
-#else
 IntObject& IntObject::operator=(int val) {
 	value = val;
 	return *this;
 } // end function operator=(int)
-#endif
 
 bool IntObject::operator==(IntObject& obj) const {
 	return getVal() == obj.getVal();
 } // end function operator==
 
-bool IntObject::equals(IntObject* obj) {
-	return getVal() == obj->getVal();
+bool IntObject::equals(Object* obj) {
+	return getVal() == dynamic_cast<IntObject*>(obj)->getVal();
 } // end function equals
+
+void IntObject::convert(void* val_ptr) {
+	val_ptr = static_cast<int*> (val_ptr);
+} // end function convert
 
 ostream& CharObject::getOutput(ostream& output) {
 	output << getVal();
@@ -78,10 +84,14 @@ bool CharObject::operator==(CharObject& obj) const {
 	return getVal() == obj.getVal();
 } // end function operator==
 
-bool CharObject::equals(CharObject* obj) {
-	cout << "getVal() = " << getVal() << ",\tobj.getVal() = " << obj->getVal() << endl;
-	return getVal() == obj->getVal();
+bool CharObject::equals(Object* obj) {
+	cout << "getVal() = " << getVal() << ",\tobj.getVal() = " << dynamic_cast<CharObject*>(obj)->getVal() << endl;
+	return getVal() == dynamic_cast<CharObject*>(obj)->getVal();
 } // end function equals
+
+void CharObject::convert(void* val_ptr) {
+	val_ptr = static_cast<char*>(val_ptr);
+} // end function convert
 
 char CharObject::getVal() const {
 	return value;

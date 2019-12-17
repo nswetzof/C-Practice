@@ -7,22 +7,32 @@
 using namespace std;
 
 #define BASIC 1
-#define tname(t, v) (static_cast<(typename t)*>(v)) // DOESN'T WORK
+#define tname(t, v) (static_cast<(t)*>((v))) // DOESN'T WORK
+
+struct A {
+	friend bool operator==(A& a1, A& a2) {
+		return a1.equals(a2);
+	}
+	virtual bool equals(A& a) = 0;
+};
+
+struct B : A {
+	B() : value(3) {}
+	virtual bool equals(A& other) {
+		return value == dynamic_cast<B&>(other).value;
+	}
+	int value;
+};
+
 
 int main() {
-	Int t0(2);
-
-	void* te = &t0;
-
+	Int t0(259783);
 	Char t1('a');
 	Int t2 = t0;
 	PyInt ptr = &t0;
 	Char t1a('a');
 	PyObj t1_ptr = &t1;
 	PyObj t2_ptr = &t1a;
-	//cout << t1_ptr->equals(t2_ptr) << endl;
-	//cout << "t1_ptr: " << t1_ptr->type() << "\nt2_ptr: " << t2_ptr->type() << endl;
-	//exit(1);
 
 	List list;
 	list.append(&t0);

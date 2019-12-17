@@ -96,9 +96,9 @@ void List::remove(Object* obj) {
 	for (int i = 0; i < size; i++) {
 #if DEBUG
 		cout << "elems[i]: " << elems[i]->type() << ",\tobj: " << obj->type() << endl;
-		cout << "\t\t" << elems[i] << " == " << obj << ": " << (obj->equals(elems[i])) << endl;
+		cout << "\t\t" << elems[i] << " == " << obj << ": " << (elems[i] == obj) << endl;
 #else
-		if (elems[i]->equals(obj)) {
+		if (*(elems[i]) == *obj) {
 			index = i;
 			break;
 		}
