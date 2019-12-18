@@ -35,6 +35,30 @@ bool Object::equals(Object& obj) {
 	return this == &obj;
 } // end function equals
 
+bool Object::lt(Object& obj) {
+	throw exception("Not implemented.");
+} // end function lt
+
+bool Object::gt(Object& obj) {
+	throw exception("Not implemented.");
+} // end function gt
+
+bool operator<(Object& obj, Object& other) {
+	return obj.lt(other);
+} // end function operator<
+
+bool operator>(Object& obj, Object& other) {
+	return obj.gt(other);
+} // end function operator>
+
+bool operator<=(Object& obj, Object& other) {
+	return (obj.lt(other) || obj.equals(other));
+} // end function operator<=
+
+bool operator>=(Object& obj, Object& other) {
+	return (obj.gt(other) || obj.equals(other));
+} // end function operator>=
+
 std::istream& IntObject::getInput(istream& input) {
 	input >> value;
 	return input;
@@ -50,6 +74,19 @@ bool IntObject::equals(Object& obj) {
 		return getVal() == dynamic_cast<IntObject&>(obj).getVal();
 	return false;
 } // end function equals
+
+bool IntObject::lt(Object& obj) {
+	if (type() == obj.type()) {
+		return value < dynamic_cast<IntObject&>(obj).getVal();
+	} // end if
+	throw logic_error("Unorderable types.");
+} // end function lt
+
+bool IntObject::gt(Object& obj) {
+	if (type() == obj.type())
+		return value > dynamic_cast<IntObject&>(obj).getVal();
+	throw logic_error("Unorderable types.");
+} // end function gt
 
 ostream& CharObject::getOutput(ostream& output) {
 	output << getVal();
@@ -68,9 +105,18 @@ bool CharObject::equals(Object& obj) {
 	return false;
 } // end function equals
 
-void CharObject::convert(void* val_ptr) {
-	val_ptr = static_cast<char*>(val_ptr);
-} // end function convert
+bool CharObject::lt(Object& obj) {
+	if (type() == obj.type()) {
+		return value < dynamic_cast<CharObject&>(obj).getVal();
+	} // end if
+	throw logic_error("Unorderable types.");
+} // end function lt
+
+bool CharObject::gt(Object& obj) {
+	if (type() == obj.type())
+		return value > dynamic_cast<CharObject&>(obj).getVal();
+	throw logic_error("Unorderable types.");
+} // end function gt
 
 char CharObject::getVal() const {
 	return value;

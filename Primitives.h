@@ -13,6 +13,10 @@ class Object {
 	friend ostream& operator<<(ostream&, Object*);
 	friend istream& operator>>(istream&, Object*);
 	friend bool operator==(Object&, Object&);
+	friend bool operator<(Object&, Object&);
+	friend bool operator>(Object&, Object&);
+	friend bool operator<=(Object&, Object&);
+	friend bool operator>=(Object&, Object&);
 public:
 	virtual ostream& getOutput(ostream& output) { output << "Object at " << this; return output; }
 	virtual istream& getInput(istream&) { throw exception("Not implemented."); }
@@ -20,6 +24,8 @@ public:
 	//virtual bool operator==(Object&);
 #if TEST
 	virtual bool equals(Object&);
+	virtual bool lt(Object&);
+	virtual bool gt(Object&);
 	virtual inline int type() { return object; }
 #endif
 protected:
@@ -46,6 +52,8 @@ public:
 	
 #if TEST
 	virtual bool equals(Object&);
+	virtual bool lt(Object&);
+	virtual bool gt(Object&);
 	virtual inline int type() { return int_object; }
 #endif
 
@@ -69,9 +77,10 @@ public:
 	virtual ostream& getOutput(ostream&);
 	virtual istream& getInput(istream&);
 
-	virtual void convert(void* val_ptr);
 #if TEST
 	virtual bool equals(Object&);
+	virtual bool lt(Object&);
+	virtual bool gt(Object&);
 	virtual inline int type() { return char_object; }
 #endif
 	char getVal() const;

@@ -25,4 +25,6 @@ int main() {
 	list.remove(&t1a);
 	cout << "List of length " << len(list) << ": ";
 	cout << list << endl;
+	list.sort();
+	cout << list << endl;
 } // end main

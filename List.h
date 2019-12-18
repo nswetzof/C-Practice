@@ -22,6 +22,7 @@ public:
 	Object* pop();
 #if NEXT_STAGE // don't compile beyond this point unless NEXT_STAGE is defined
 	void remove(Object* obj);
+	void sort();
 #endif
 private:
 	Object** elems;

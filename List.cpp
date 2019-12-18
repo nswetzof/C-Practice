@@ -121,3 +121,7 @@ void List::remove(Object* obj) {
 	} // end outer if
 } // end function remove
 #endif
+
+void List::sort() {
+	stable_sort(elems, elems + size);
+} // end function sort
