@@ -20,8 +20,6 @@ istream& operator>>(istream& input, Object* obj) {
 //	return input;
 //} // end function operator>>
 
-
-
 bool operator==(Object& obj, Object& other) {
 	return obj.equals(other);
 } // end function operator==
@@ -59,6 +57,15 @@ bool operator>=(Object& obj, Object& other) {
 	return (obj.gt(other) || obj.equals(other));
 } // end function operator>=
 
+Object& Object::operator=(Object& other) {
+	setObject(other);
+	return *this;
+} // end function operator=
+
+Object& Object::setObject(Object& other) {
+	throw exception("Not implemented.");
+} // end function setObject
+
 std::istream& IntObject::getInput(istream& input) {
 	input >> value;
 	return input;
@@ -68,6 +75,16 @@ IntObject& IntObject::operator=(int val) {
 	value = val;
 	return *this;
 } // end function operator=(int)
+
+bool operator==(Object& obj, int num) {
+	Object* other = new IntObject(num);
+	return (obj == *other);
+} // end function operator==
+
+bool operator==(Object& obj, char c) {
+	Object* other = new CharObject(c);
+	return (obj == *other);
+} // end function operator==
 
 bool IntObject::equals(Object& obj) {
 	if(type() == obj.type())
@@ -87,6 +104,15 @@ bool IntObject::gt(Object& obj) {
 		return value > dynamic_cast<IntObject&>(obj).getVal();
 	throw logic_error("Unorderable types.");
 } // end function gt
+
+IntObject& IntObject::setObject(Object& other) {
+	if (typeid(other) == typeid(*this)) {
+		IntObject(dynamic_cast<IntObject&>(other));
+		//dynamic_cast<IntObject*>(this);
+		return *this;
+	}
+	throw runtime_error("Object type mismatch.");
+} // end function setObject
 
 ostream& CharObject::getOutput(ostream& output) {
 	output << getVal();

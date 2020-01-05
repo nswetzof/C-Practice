@@ -10,6 +10,7 @@ using namespace std;
 
 int main() {
 	Int t0(259783);
+	cout << typeid(t0).name() << endl;
 	Char t1('a');
 	Int t2 = t0;
 	PyInt ptr = &t0;
@@ -22,9 +23,8 @@ int main() {
 	list.append(&t1);
 	list.append(new Int(522));
 	list.append(new Char('c'));
-	list.remove(&t1a);
-	cout << "List of length " << len(list) << ": ";
+	list.remove('a');
 	cout << list << endl;
-	list.sort();
+	list.sort_list();
 	cout << list << endl;
 } // end main

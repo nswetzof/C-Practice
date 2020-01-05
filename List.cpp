@@ -122,6 +122,15 @@ void List::remove(Object* obj) {
 } // end function remove
 #endif
 
-void List::sort() {
-	stable_sort(elems, elems + size);
+void List::sort_list() {
+	Object* list = new Object[capacity];
+	for (int i = 0; i < size; i++) {
+		list[i].operator=(*elems[i]);
+		cout << "here\n";
+		cout << &list[i] << ", ";
+	} // end for
+	//cout << '\n';
+	//sort(list, list + size);
+	//for (int i = 0; i < size; i++)
+	//	elems[i] = &list[i];
 } // end function sort
