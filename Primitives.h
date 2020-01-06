@@ -4,6 +4,7 @@
 #define PTR 0
 #define TEST 1
 #define TEMPLATE 1
+#define IMPLEMENT_SETOBJECT 1
 
 using namespace std;
 //typedef IntObject Int;
@@ -25,7 +26,7 @@ public:
 	virtual istream& getInput(istream&) { throw exception("Not implemented."); }
 
 	Object& operator=(Object&);
-	virtual Object& setObject(Object&);
+	virtual Object* setObject(Object&);
 	
 	//virtual bool operator==(Object&);
 #if TEST
@@ -41,6 +42,9 @@ protected:
 class IntObject : public Object {
 	friend bool operator==(Object&, int);
 public:
+	static void test() {
+		cout << "this is a test";
+	}
 	IntObject() : value(0) {} // end IntObject default constructor
 	IntObject(int val) :
 		value(val) {
@@ -53,8 +57,9 @@ public:
 	}
 	virtual istream& getInput(istream&);
 	
-	virtual IntObject& setObject(Object&);
+	virtual Object* setObject(Object&);
 	virtual IntObject& operator=(IntObject& i_obj) {
+		cout << "Calling assignment operator for two IntObjects" << endl;
 		value = i_obj.getVal();
 		return *this;
 	}

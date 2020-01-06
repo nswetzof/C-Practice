@@ -125,7 +125,7 @@ void List::remove(Object* obj) {
 void List::sort_list() {
 	Object* list = new Object[capacity];
 	for (int i = 0; i < size; i++) {
-		list[i].operator=(*elems[i]);
+		(&list[i])->operator=(*elems[i]);
 		cout << "here\n";
 		cout << &list[i] << ", ";
 	} // end for

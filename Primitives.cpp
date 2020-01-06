@@ -58,13 +58,17 @@ bool operator>=(Object& obj, Object& other) {
 } // end function operator>=
 
 Object& Object::operator=(Object& other) {
-	setObject(other);
+	cout << "\n\ncalling = " << typeid(*this).name() << "\n";
+	Object* new_obj = this->setObject(other);
 	return *this;
 } // end function operator=
 
-Object& Object::setObject(Object& other) {
+#if IMPLEMENT_SETOBJECT >= 1
+Object* Object::setObject(Object& other) {
+	cout << "\nCalling setObject for " << typeid(*this).name() << endl;
 	throw exception("Not implemented.");
 } // end function setObject
+#endif
 
 std::istream& IntObject::getInput(istream& input) {
 	input >> value;
@@ -105,11 +109,12 @@ bool IntObject::gt(Object& obj) {
 	throw logic_error("Unorderable types.");
 } // end function gt
 
-IntObject& IntObject::setObject(Object& other) {
+Object* IntObject::setObject(Object& other) {
+	cout << "\nCalling setObject for IntObject" << endl;
 	if (typeid(other) == typeid(*this)) {
-		IntObject(dynamic_cast<IntObject&>(other));
+		return new IntObject(value);
+		//IntObject(dynamic_cast<IntObject&>(other));
 		//dynamic_cast<IntObject*>(this);
-		return *this;
 	}
 	throw runtime_error("Object type mismatch.");
 } // end function setObject
