@@ -26,14 +26,14 @@ public:
 	virtual istream& getInput(istream&) { throw exception("Not implemented."); }
 
 	//virtual bool operator==(Object&);
+	Object& operator=(Object&);
+	virtual Object* setObject(Object&) = 0;
 #if TEST
 	virtual bool equals(Object&);
 	virtual bool lt(Object&);
+	//virtual bool ltObject(Object*);
 	virtual bool gt(Object&);
-	virtual inline int type() { return object; }
 #endif
-protected:
-	static const enum types {object, int_object, char_object };
 }; // end class Object
 
 class IntObject : public Object {
@@ -46,7 +46,6 @@ public:
 	IntObject(int val) :
 		value(val) {
 	} // end IntObject constructor with 1 parameter // end IntObject single-argument constructor
-	IntObject(Object&);
 
 	virtual ostream& getOutput(ostream& os) {
 		os << getVal();
@@ -54,6 +53,8 @@ public:
 	}
 	virtual istream& getInput(istream&);
 	
+	virtual Object* setObject(Object&);
+
 	IntObject& operator=(IntObject& i_obj) {
 		cout << "Calling assignment operator for two IntObjects" << endl;
 		value = i_obj.getVal();
@@ -63,8 +64,8 @@ public:
 #if TEST
 	virtual bool equals(Object&);
 	virtual bool lt(Object&);
+	//virtual bool ltObject(Object*);
 	virtual bool gt(Object&);
-	virtual inline int type() { return int_object; }
 #endif
 
 #if !PTR // not using pointer implementation
@@ -87,11 +88,13 @@ public:
 	virtual ostream& getOutput(ostream&);
 	virtual istream& getInput(istream&);
 
+	virtual Object* setObject(Object&);
+
 #if TEST
 	virtual bool equals(Object&);
 	virtual bool lt(Object&);
+	//virtual bool ltObject(Object*);
 	virtual bool gt(Object&);
-	virtual inline int type() { return char_object; }
 #endif
 	char getVal() const;
 private:

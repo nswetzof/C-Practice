@@ -111,7 +111,7 @@ void List::remove(Object* obj) {
 		}
 	} // end for
 	if (index != -1) {
-		if (size < capacity / 4) {
+		if (size < (capacity / 4)) {
 			capacity /= 2;
 		} // end inner if
 		Object** new_list = new Object * [capacity]; // new_list will hold value of elems with element removed
@@ -126,15 +126,11 @@ void List::remove(Object* obj) {
 } // end function remove
 #endif
 
+// compare function to be used in sort algorithm for sort_list
+bool ltObj(Object* obj, Object* other) {
+	return (*obj < *other);
+}
+
 void List::sort_list() {
-	Object* list = new Object[capacity];
-	for (int i = 0; i < size; i++) {
-		(list[i]) = (*elems[i]);
-		cout << "here\n";
-		cout << &list[i] << ", ";
-	} // end for
-	//cout << '\n';
-	//sort(list, list + size);
-	//for (int i = 0; i < size; i++)
-	//	elems[i] = &list[i];
+	sort(elems, elems + size, &ltObj);
 } // end function sort

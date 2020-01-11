@@ -32,7 +32,7 @@ public:
 			}
 		} // end for
 		if (index != -1) {
-			if (size < capacity / 4) {
+			if (size < (capacity / 4)) {
 				capacity /= 2;
 			} // end inner if
 			Object** new_list = new Object * [capacity]; // new_list will hold value of elems with element removed
