@@ -25,9 +25,6 @@ public:
 	virtual ostream& getOutput(ostream& output) { output << "Object at " << this; return output; }
 	virtual istream& getInput(istream&) { throw exception("Not implemented."); }
 
-	Object& operator=(Object&);
-	virtual Object* setObject(Object&);
-	
 	//virtual bool operator==(Object&);
 #if TEST
 	virtual bool equals(Object&);
@@ -57,8 +54,7 @@ public:
 	}
 	virtual istream& getInput(istream&);
 	
-	virtual Object* setObject(Object&);
-	virtual IntObject& operator=(IntObject& i_obj) {
+	IntObject& operator=(IntObject& i_obj) {
 		cout << "Calling assignment operator for two IntObjects" << endl;
 		value = i_obj.getVal();
 		return *this;

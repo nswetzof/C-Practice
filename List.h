@@ -9,6 +9,7 @@ class List {
 	friend ostream& operator<<(ostream&, const List&);
 	friend istream& operator>>(istream&, List&);
 	friend const int len(const List&);
+	friend int length(List&);
 public:
 	List(); // default constructor
 	List(const int);

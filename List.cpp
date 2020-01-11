@@ -5,6 +5,10 @@
 
 using namespace std;
 
+int length(List& l) {
+	return l.size;
+}
+
 List::List() : 
 	capacity(0), size(0), elems(new Object*[0]) {} // end List default constructor
 
@@ -125,7 +129,7 @@ void List::remove(Object* obj) {
 void List::sort_list() {
 	Object* list = new Object[capacity];
 	for (int i = 0; i < size; i++) {
-		(&list[i])->operator=(*elems[i]);
+		(list[i]) = (*elems[i]);
 		cout << "here\n";
 		cout << &list[i] << ", ";
 	} // end for
